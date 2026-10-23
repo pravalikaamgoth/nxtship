@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NXTSHIP — Smart shopping picks for India</title>
+<meta name="description" content="Colorful shortcuts to Amazon, Flipkart, Myntra, AJIO, Nykaa, MakeMyTrip and more, plus simple tips for fair prices.">
+<style>
+:root{
+  --ink:#1b1340; --muted:#5a5580; --bg:#fff9ef;
+  --violet:#6c3df4; --pink:#ff4f8b; --sun:#ffc533; --mint:#19c9a0; --sky:#3aa0ff;
+  --amazon:#ff9900; --flipkart:#2874f0; --myntra:#ff3f6c; --ajio:#2b2b3a;
+  --pantaloons:#c8102e; --godaddy:#1bdbdb; --goibibo:#f26522; --gharsoap:#2e9e5b;
+  --jiomart:#0078ad; --decathlon:#0082c3; --mmt:#e53935; --cleartrip:#f36f21;
+  --boat:#d71920; --skincare:#f6a6c1; --snitch:#111111; --nykaa:#fc2779;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.wrap{width:92%;max-width:1040px;margin:0 auto}
+
+/* top bar */
+.top{
+  position:sticky;top:0;z-index:10;background:var(--ink);color:#fff;
+  padding:calc(12px + env(safe-area-inset-top,0px)) 0 12px;
+}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-weight:800;font-size:22px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.dot{width:14px;height:14px;border-radius:50%;background:var(--sun);box-shadow:10px 0 0 var(--pink),20px 0 0 var(--mint);margin-right:22px}
+.top nav a{color:#fff;text-decoration:none;font-weight:700;font-size:14px;margin-left:16px;opacity:.9}
+.top nav a:hover{color:var(--sun)}
+@media(max-width:560px){.top nav{display:none}}
+
+/* hero */
+.hero{
+  position:relative;overflow:hidden;color:#fff;text-align:center;
+  background:linear-gradient(135deg,var(--violet) 0%,#9b3dff 45%,var(--pink) 100%);
+  padding:64px 0 96px;
+}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.hero::before{width:280px;height:280px;background:var(--sun);opacity:.9;left:-90px;top:-80px}
+.hero::after{width:220px;height:220px;background:var(--mint);opacity:.85;right:-60px;bottom:-90px}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{font-size:clamp(32px,7vw,58px);line-height:1.1;letter-spacing:-.03em;max-width:15em;margin:0 auto}
+.hero p{font-size:clamp(16px,2.4vw,20px);max-width:34em;margin:16px auto 0;opacity:.95}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px}
+.chip{
+  background:#fff;color:var(--ink);padding:9px 16px;border-radius:999px;
+  font-weight:800;font-size:14px;text-decoration:none;box-shadow:0 4px 0 rgba(27,19,64,.35);
+}
+.chip:hover{transform:translateY(-2px)}
+.chip:nth-child(1){background:var(--sun)}
+.chip:nth-child(2){background:var(--mint)}
+.chip:nth-child(3){background:#fff}
+.chip:nth-child(4){background:var(--sky);color:#fff}
+
+h2{font-size:clamp(26px,4vw,34px);letter-spacing:-.02em;margin:64px 0 6px}
+.sub{color:var(--muted);margin-bottom:24px}
+
+/* stores */
+.stores{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.store{
+  background:#fff;border:3px solid var(--ink);border-radius:20px;overflow:hidden;
+  display:flex;flex-direction:column;box-shadow:6px 6px 0 var(--ink);
+  transition:transform .15s,box-shadow .15s;
+}
+.store:hover{transform:translate(-2px,-2px);box-shadow:9px 9px 0 var(--ink)}
+.store .badge{
+  height:96px;display:flex;align-items:center;justify-content:center;text-align:center;
+  padding:0 12px;line-height:1.1;
+  font-size:28px;font-weight:900;color:#fff;letter-spacing:-.02em;border-bottom:3px solid var(--ink);
+}
+.amazon .badge{background:var(--amazon);color:var(--ink)}
+.flipkart .badge{background:var(--flipkart)}
+.myntra .badge{background:var(--myntra)}
+.ajio .badge{background:var(--ajio)}
+.pantaloons .badge{background:var(--pantaloons)}
+.godaddy .badge{background:var(--godaddy);color:var(--ink)}
+.goibibo .badge{background:var(--goibibo)}
+.gharsoap .badge{background:var(--gharsoap)}
+.jiomart .badge{background:var(--jiomart)}
+.decathlon .badge{background:var(--decathlon)}
+.mmt .badge{background:var(--mmt)}
+.cleartrip .badge{background:var(--cleartrip)}
+.boat .badge{background:var(--boat)}
+.skincare .badge{background:var(--skincare);color:var(--ink)}
+.snitch .badge{background:var(--snitch)}
+.nykaa .badge{background:var(--nykaa)}
+.store .body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.store p{color:var(--muted);font-size:15px;flex:1}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;background:#efeaff;color:var(--violet)}
+.btn{
+  display:block;text-align:center;text-decoration:none;font-weight:800;font-size:16px;
+  background:var(--ink);color:#fff;padding:12px;border-radius:12px;
+}
+.btn:hover{background:var(--violet)}
+
+/* tips */
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.tip{border-radius:20px;padding:22px;border:3px solid var(--ink)}
+.tip:nth-child(1){background:#d9fff3}
+.tip:nth-child(2){background:#fff0b8}
+.tip:nth-child(3){background:#ffdbe8}
+.tip .ic{font-size:34px;line-height:1;margin-bottom:8px}
+.tip h3{font-size:19px;margin-bottom:4px}
+.tip p{font-size:15px;color:#3b3560}
+
+/* about */
+.about{
+  margin-top:64px;background:var(--ink);color:#fff;border-radius:24px;padding:30px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;
+}
+.about h3{color:var(--sun);font-size:18px;margin-bottom:4px}
+.about p{font-size:15px;opacity:.9}
+
+footer{margin-top:48px;padding:28px 0 36px;font-size:13px;color:var(--muted);text-align:center}
+footer p+p{margin-top:8px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span>NXTSHIP</div>
+    <nav>
+      <a href="#stores">Stores</a>
+      <a href="#travel">Travel &amp; more</a>
+      <a href="#tips">Tips</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Shop smarter at India's favourite stores</h1>
+    <p>One tidy page with quick links to Amazon, Flipkart, Myntra, Nykaa, MakeMyTrip and more, plus easy tips for a fair price.</p>
+    <div class="chips">
+      <a class="chip" href="#stores">Pick a store</a>
+      <a class="chip" href="#travel">Travel &amp; more</a>
+      <a class="chip" href="#tips">Shopping tips</a>
+      <a class="chip" href="#about">How we work</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="stores">
+    <h2>Choose your store</h2>
+    <p class="sub">Each button opens the store's own website in a new tab.</p>
+    <div class="stores">
+
+      <article class="store amazon">
+        <div class="badge">amazon</div>
+        <div class="body">
+          <div class="tags"><span>Electronics</span><span>Books</span><span>Home</span></div>
+          <p>Gadgets, groceries, books and everyday essentials.</p>
+          <a class="btn" href="https://amzn-to.co/HS6QzB" target="_blank" rel="sponsored nofollow noopener noreferrer">Visit Amazon.in</a>
+        </div>
+      </article>
+
+      <article class="store flipkart">
+        <div class="badge">Flipkart</div>
+        <div class="body">
+          <div class="tags"><span>Mobiles</span><span>Appliances</span><span>Fashion</span></div>
+          <p>Phones, appliances and big-sale daily deals.</p>
+          <a class="btn" href="https://fkrt.co/j7PqEo" target="_blank" rel="sponsored nofollow noopener noreferrer">Visit Flipkart</a>
+        </div>
+      </article>
+
+      <article class="store jiomart">
+        <div class="badge">JioMart</div>
+        <div class="body">
+          <div class="tags"><span>Grocery</span><span>Daily needs</span><span>Home</span></div>
+          <p>Groceries and household essentials delivered to your door.</p>
+          <a class="btn" href="https://bilty.co/aZ0rn2" target="_blank" rel="sponsored nofollow noopener noreferrer">Visit JioMart</a>
+        </div>
+      </article>
+
+      <article class="store myntra">
+        <div class="badge">Myntra</div>
+        <div class="body">
+          <div class="tags"><span>Clothing</span><span>Footwear</span><span>Beauty</span></div>
+          <p>Trending fashion, shoes and accessories.</p>
+          <a class="btn" href="https://myntr.in/jbOR8A" target="_blank" rel="sponsored nofollow noopener noreferrer">Visit Myntra</a>
+        </div>
+      </article>
+
+      <article class="store ajio">
+        <div class="badge">AJIO</div>
+        <div class="body">
+          <div class="tags"><span>Brands</span><span>Lifestyle</span><span>Ethnic</span></div>
+          <p>Fashion and lifestyle labels in one place.</p>
+          <a class="btn" href="https://ajiio.co/d6ukhx" target="_blank" rel="sponsored nofollow noopener noreferrer">Visit AJIO</a>
+        </div>
+      </article>
+
+      <article class="store pantaloons">
+        <div class="badge">Pantaloons</div>
+        <div class="body">
+          <div class="tags"><span>Family fashion</span><span>Western</span><span>Ethnic</span></div>
+          <p>Everyday and occasion wear for the whole family.</p>
+          <a class="btn" href="https://bilty.co/dZ2Q38" target="_blank" rel="sponsored nofollow noopener noreferrer">Visit Pantaloons</a>
+        </div>
+      </article>
+
+      <article class="store snitch">
+        <div class="badge">SNITCH</div>
+        <div class="body">
+          <div class="tags"><span>Men's fashion</span><span>Streetwear</span><span>Shirts</span></div>
+          <p>Trendy menswear, from shirts to oversized tees.</p>
+          <a class="btn" href="https://bilty.co/Qwcyou" target="_blank" rel="sponsored nofollow noopener noreferrer">Visit SNITCH</a>
+        </div>
+      </article>
+
+      <article class="store nykaa">
+        <div class="badge">Nykaa</div>
+        <div class="body">
+          <div class="tags"><span>Makeup</span><span>Skincare</span><span>Haircare</span></div>
+          <p>Beauty, makeup and personal care from top brands.</p>
+          <a class="btn" href="https://bilty.co/BiLyQ0" target="_blank" rel="sponsored nofollow noopener noreferrer">Visit Nykaa</a>
+        </div>
+      </article>
+
+      <article class="store skincare">
+        <div class="badge">Glow Skincare</div>
+        <div class="body">
+          <div class="tags"><span>Skincare</span><span>Glow</span><span>Self-care</span></div>
+          <p>Glow-boosting skincare picks for a fresh, healthy look.</p>
+          <a class="btn" href="https://bilty.co/q6IAJO" target="_blank" rel="sponsored nofollow noopener noreferrer">Explore Skincare</a>
+        </div>
+      </article>
+
+      <article class="store gharsoap">
+        <div class="badge">Ghar Soap</div>
+        <div class="body">
+          <div class="tags"><span>Handmade</span><span>Bath</span><span>Natural</span></div>
+          <p>Handcrafted soaps and bath products for daily care.</p>
+          <a class="btn" href="https://bilty.co/eCoKbB" target="_blank" rel="sponsored nofollow noopener noreferrer">Visit Ghar Soap</a>
+        </div>
+      </article>
+
+      <article class="store boat">
+        <div class="badge">boAt</div>
+        <div class="body">
+          <div class="tags"><span>Earbuds</span><span>Speakers</span><span>Smartwatches</span></div>
+          <p>Audio gear and wearables at pocket-friendly prices.</p>
+          <a class="btn" href="https://bilty.co/eYOQpT" target="_blank" rel="sponsored nofollow noopener noreferrer">Visit boAt</a>
+        </div>
+      </article>
+
+      <article class="store decathlon">
+        <div class="badge">Decathlon</div>
+        <div class="body">
+          <div class="tags"><span>Sports</span><span>Fitness</span><span>Outdoor</span></div>
+          <p>Sports gear, activewear and outdoor equipment.</p>
+          <a class="btn" href="https://bilty.co/kP7ubJ" target="_blank" rel="sponsored nofollow noopener noreferrer">Visit Decathlon</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="travel">
+    <h2>Travel &amp; more</h2>
+    <p class="sub">Book trips and get your website online.</p>
+    <div class="stores">
+
+      <article class="store mmt">
+        <div class="badge">MakeMyTrip Hotels</div>
+        <div class="body">
+          <div class="tags"><span>Hotels</span><span>Stays</span><span>Holidays</span></div>
+          <p>Find and book hotels and stays across India and abroad.</p>
+          <a class="btn" href="https://bilty.co/qfHGC3" target="_blank" rel="sponsored nofollow noopener noreferrer">Book Hotels</a>
+        </div>
+      </article>
+
+      <article class="store cleartrip">
+        <div class="badge">Cleartrip Flights</div>
+        <div class="body">
+          <div class="tags"><span>Flights</span><span>Domestic</span><span>International</span></div>
+          <p>Search and book flight tickets with a simple, clean flow.</p>
+          <a class="btn" href="https://bilty.co/WVZMxm" target="_blank" rel="sponsored nofollow noopener noreferrer">Book Flights</a>
+        </div>
+      </article>
+
+      <article class="store goibibo">
+        <div class="badge">Goibibo Bus</div>
+        <div class="body">
+          <div class="tags"><span>Bus tickets</span><span>Intercity</span><span>Sleeper</span></div>
+          <p>Compare routes and book bus tickets online.</p>
+          <a class="btn" href="https://bilty.co/metgfV" target="_blank" rel="sponsored nofollow noopener noreferrer">Book Bus Tickets</a>
+        </div>
+      </article>
+
+      <article class="store godaddy">
+        <div class="badge">GoDaddy</div>
+        <div class="body">
+          <div class="tags"><span>Domains</span><span>Hosting</span><span>Websites</span></div>
+          <p>Domain names, hosting and tools to launch your website.</p>
+          <a class="btn" href="https://bilty.co/YHn96v" target="_blank" rel="sponsored nofollow noopener noreferrer">Visit GoDaddy</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="tips">
+    <h2>Three quick tips</h2>
+    <p class="sub">Small habits that save money and hassle.</p>
+    <div class="tips">
+      <div class="tip">
+        <div class="ic">⚖️</div>
+        <h3>Compare first</h3>
+        <p>Check the same product on two stores. Price and delivery dates often differ.</p>
+      </div>
+      <div class="tip">
+        <div class="ic">⭐</div>
+        <h3>Read recent reviews</h3>
+        <p>Sort by newest and look for buyer photos, not just the star rating.</p>
+      </div>
+      <div class="tip">
+        <div class="ic">↩️</div>
+        <h3>Know the returns</h3>
+        <p>Confirm the return window and who pays for pickup before you order.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div>
+      <h3>Independent</h3>
+      <p>We are not owned by, or an official partner of, any of the stores or brands listed on this page.</p>
+    </div>
+    <div>
+      <h3>Your order, their service</h3>
+      <p>Payments, delivery, returns and offers are handled entirely by the store you buy from.</p>
+    </div>
+    <div>
+      <h3>No sign-ups</h3>
+      <p>We don't collect accounts, passwords or personal details on this site.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 NXTSHIP. All rights reserved.</p>
+    <p>Some links on this page are affiliate links. If you buy through them, we may earn a small commission at no extra cost to you.</p>
+  </div>
+</footer>
+
+</body>
+</html>
